@@ -2,8 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -11,6 +9,9 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 const (
@@ -22,7 +23,7 @@ var (
 	registered = prometheus.NewGauge(prometheus.GaugeOpts{
 		Name: "registered",
 		Help: "the number of users registered for spacedrop",
-		})
+	})
 
 	exRate = prometheus.NewGauge(prometheus.GaugeOpts{
 		Name: "exchange_rate",
@@ -45,8 +46,8 @@ func main() {
 	log.Fatal(http.ListenAndServe(":8080", r))
 }
 
-func getRegistered(){
-	for ; true; <-time.NewTicker(time.Minute * 5).C {
+func getRegistered() {
+	for ; true; <-time.NewTicker(time.Minute).C {
 
 		res, err := http.Get(scrapeUrl)
 		if err != nil {
@@ -71,8 +72,8 @@ func getRegistered(){
 	}
 }
 
-func getExchangeRate(){
-	for ; true; <-time.NewTicker(time.Minute * 10).C {
+func getExchangeRate() {
+	for ; true; <-time.NewTicker(time.Minute).C {
 		res, err := http.Get(exchangeUrl)
 
 		if err != nil {
