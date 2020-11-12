@@ -52,11 +52,13 @@ func getRegistered() {
 		res, err := http.Get(scrapeUrl)
 		if err != nil {
 			log.Println(err)
+			continue
 		}
 
 		body, err := ioutil.ReadAll(res.Body)
 		if err != nil {
 			log.Println(err)
+			continue
 		}
 
 		r := regexp.MustCompile(`<span class="high-speech">(.*)</span>`)
@@ -78,6 +80,7 @@ func getExchangeRate() {
 
 		if err != nil {
 			log.Println(err)
+			continue
 		}
 
 		er := ExRate{}
